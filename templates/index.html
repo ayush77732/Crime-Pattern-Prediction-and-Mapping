@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="CrimePredict - AI-powered Crime Pattern Prediction and Intelligent Mapping system for analyzing crime data across India">
+    <title>CrimePredict - Crime Pattern Prediction & Mapping</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <i class="fas fa-shield-halved"></i>
+                <span>CrimePredict</span>
+            </a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="/dashboard" class="nav-btn">Launch Dashboard →</a>
+            </div>
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-bolt"></i> AI-Powered Crime Analytics
+                </div>
+                <h1>Crime Pattern Prediction <br>& <span class="gradient-text">Intelligent Mapping</span></h1>
+                <p class="hero-description">
+                    Advanced machine learning system for analyzing crime patterns, predicting hotspots,
+                    and creating interactive heat maps for safer communities across India.
+                    Upload your dataset and get instant AI-driven insights.
+                </p>
+                <div class="hero-buttons">
+                    <a href="/dashboard" class="btn btn-primary" id="getStartedBtn">
+                        <i class="fas fa-rocket"></i> Get Started
+                    </a>
+                    <a href="#features" class="btn btn-outline">
+                        <i class="fas fa-play-circle"></i> Explore Features
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="95">0</span><span class="stat-suffix">%</span>
+                        <span class="stat-label">Prediction Accuracy</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="28">0</span><span class="stat-suffix">+</span>
+                        <span class="stat-label">States Covered</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="50">0</span><span class="stat-suffix">+</span>
+                        <span class="stat-label">Crime Types</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-card card-1">
+                    <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="card-info">
+                        <h4>Real-time Analysis</h4>
+                        <p>Instant crime pattern detection</p>
+                    </div>
+                </div>
+                <div class="hero-card card-2">
+                    <div class="card-icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <div class="card-info">
+                        <h4>Heat Mapping</h4>
+                        <p>Geographic risk visualization</p>
+                    </div>
+                </div>
+                <div class="hero-card card-3">
+                    <div class="card-icon"><i class="fas fa-brain"></i></div>
+                    <div class="card-info">
+                        <h4>AI Predictions</h4>
+                        <p>ML-powered crime forecasting</p>
+                    </div>
+                </div>
+                <div class="hero-card card-4">
+                    <div class="card-icon"><i class="fas fa-robot"></i></div>
+                    <div class="card-info">
+                        <h4>AI Assistant</h4>
+                        <p>Smart data-driven answers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">About The Project</span>
+                <h2>Understanding Crime Through <span class="gradient-text">Data Science</span></h2>
+                <p class="section-subtitle">
+                    Our Crime Pattern Prediction & Mapping system leverages machine learning algorithms
+                    to analyze historical crime data from India, identify patterns, predict future trends,
+                    and visualize crime hotspots on interactive maps.
+                </p>
+            </div>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="about-icon"><i class="fas fa-database"></i></div>
+                    <h3>Data-Driven</h3>
+                    <p>Upload any crime dataset (CSV) and our system auto-detects columns, crime types, states, and time
+                        periods for seamless analysis.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon"><i class="fas fa-microchip"></i></div>
+                    <h3>Ensemble ML Models</h3>
+                    <p>Uses Random Forest & Gradient Boosting ensemble for robust predictions with cross-validation and
+                        performance metrics.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon"><i class="fas fa-globe-asia"></i></div>
+                    <h3>India-Focused</h3>
+                    <p>Specifically designed for Indian crime datasets with built-in state coordinates, IPC
+                        categorization, and regional analysis.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon"><i class="fas fa-file-pdf"></i></div>
+                    <h3>Report Generation</h3>
+                    <p>Generate comprehensive PDF reports with charts, risk assessments, predictions, and actionable
+                        recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Core Features</span>
+                <h2>Powerful Tools for <span class="gradient-text">Crime Analysis</span></h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card feature-large">
+                    <div class="feature-number">01</div>
+                    <div class="feature-icon"><i class="fas fa-fire"></i></div>
+                    <h3>Crime Hotspot Prediction</h3>
+                    <p>Identify current and future crime hotspots using growth trend analysis. Our ML model calculates
+                        risk scores for each area based on historical growth rates, helping law enforcement allocate
+                        resources proactively.</p>
+                    <div class="feature-tags">
+                        <span>Risk Scoring</span>
+                        <span>Growth Analysis</span>
+                        <span>Proactive Policing</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-number">02</div>
+                    <div class="feature-icon"><i class="fas fa-chart-area"></i></div>
+                    <h3>Crime Trend Forecasting</h3>
+                    <p>Predict future crime trends with confidence intervals using time-series analysis and ML
+                        regression models.</p>
+                    <div class="feature-tags">
+                        <span>Forecasting</span>
+                        <span>Confidence Intervals</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-number">03</div>
+                    <div class="feature-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <h3>Interactive Dashboard</h3>
+                    <p>Real-time charts, filters, and visualizations. Crime Type Distribution, Yearly Trends, Reported
+                        vs Solved, and Area Comparisons.</p>
+                    <div class="feature-tags">
+                        <span>Real-time</span>
+                        <span>Interactive</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-number">04</div>
+                    <div class="feature-icon"><i class="fas fa-map"></i></div>
+                    <h3>Heat Map Visualization</h3>
+                    <p>Color-coded geographic maps showing High (Red), Moderate (Orange), and Low (Green) risk zones
+                        across India.</p>
+                    <div class="feature-tags">
+                        <span>Geographic</span>
+                        <span>Risk Zones</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-number">05</div>
+                    <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                    <h3>AI Assistant</h3>
+                    <p>Ask questions about your data in plain English. Get insights about charts, trends, hotspots, and
+                        prevention recommendations.</p>
+                    <div class="feature-tags">
+                        <span>Natural Language</span>
+                        <span>Data Insights</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-number">06</div>
+                    <div class="feature-icon"><i class="fas fa-download"></i></div>
+                    <h3>Report Generation</h3>
+                    <p>Download comprehensive PDF reports with all analysis results, charts, predictions, and
+                        recommendations.</p>
+                    <div class="feature-tags">
+                        <span>PDF Export</span>
+                        <span>Comprehensive</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-section" id="how-it-works">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Simple & Powerful</span>
+                <h2>How It <span class="gradient-text">Works</span></h2>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <h3>Upload Dataset</h3>
+                    <p>Upload your crime CSV dataset. The system auto-detects columns and populates filters.</p>
+                </div>
+                <div class="step-connector"><i class="fas fa-arrow-right"></i></div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-filter"></i></div>
+                    <h3>Select Filters</h3>
+                    <p>Choose State, City, Crime Type, and Year from dropdown menus generated from your data.</p>
+                </div>
+                <div class="step-connector"><i class="fas fa-arrow-right"></i></div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-chart-pie"></i></div>
+                    <h3>Analyze & Predict</h3>
+                    <p>View interactive charts, heatmaps, hotspot predictions, and chat with the AI assistant.</p>
+                </div>
+                <div class="step-connector"><i class="fas fa-arrow-right"></i></div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon"><i class="fas fa-file-download"></i></div>
+                    <h3>Download Report</h3>
+                    <p>Generate and download a comprehensive PDF report with all findings and recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="section-container">
+            <div class="cta-content">
+                <h2>Ready to Analyze <span class="gradient-text">Crime Data</span>?</h2>
+                <p>Upload your dataset and start getting AI-powered insights in seconds.</p>
+                <a href="/dashboard" class="btn btn-primary btn-large">
+                    <i class="fas fa-rocket"></i> Launch Dashboard Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="section-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="nav-logo">
+                        <i class="fas fa-shield-halved"></i>
+                        <span>CrimePredict</span>
+                    </div>
+                    <p>AI-powered Crime Pattern Prediction & Mapping System</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#features">Features</a>
+                    <a href="/dashboard">Dashboard</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Features</h4>
+                    <a href="#features">Crime Hotspot Prediction</a>
+                    <a href="#features">Trend Forecasting</a>
+                    <a href="#features">Interactive Dashboard</a>
+                    <a href="#features">AI Assistant</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CrimePredict. Crime Pattern Prediction & Mapping System.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/index.js"></script>
+</body>
+
+</html>

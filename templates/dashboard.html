@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="CrimePredict Dashboard - Interactive crime analysis, heatmaps, and AI-powered predictions">
+    <title>Dashboard - CrimePredict</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="/" class="sidebar-logo">
+                <i class="fas fa-shield-halved"></i>
+                <span>CrimePredict</span>
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#upload-section" class="nav-item active" data-section="upload">
+                <i class="fas fa-cloud-upload-alt"></i> <span>Upload Data</span>
+            </a>
+            <a href="#analysis-section" class="nav-item" data-section="analysis">
+                <i class="fas fa-chart-bar"></i> <span>Analysis</span>
+            </a>
+            <a href="#heatmap-section" class="nav-item" data-section="heatmap">
+                <i class="fas fa-map-marked-alt"></i> <span>Heat Map</span>
+            </a>
+            <a href="#hotspot-section" class="nav-item" data-section="hotspot">
+                <i class="fas fa-fire"></i> <span>Hotspots</span>
+            </a>
+            <a href="#forecast-section" class="nav-item" data-section="forecast">
+                <i class="fas fa-chart-line"></i> <span>Forecast</span>
+            </a>
+            <a href="#ai-section" class="nav-item" data-section="ai">
+                <i class="fas fa-robot"></i> <span>AI Assistant</span>
+            </a>
+            <a href="#report-section" class="nav-item" data-section="report">
+                <i class="fas fa-file-pdf"></i> <span>Report</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="/" class="back-home"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h2 id="pageTitle">Crime Analysis Dashboard</h2>
+            <div class="topbar-actions">
+                <span class="status-indicator" id="statusIndicator">
+                    <span class="status-dot offline"></span> No Dataset Loaded
+                </span>
+            </div>
+        </header>
+
+        <!-- Upload Section -->
+        <section class="dashboard-section" id="upload-section">
+            <div class="section-title">
+                <h3><i class="fas fa-cloud-upload-alt"></i> Upload Dataset</h3>
+                <p>Upload your crime dataset (CSV) to begin analysis</p>
+            </div>
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <h3>Drag & Drop your CSV file here</h3>
+                <p>or click to browse files</p>
+                <p class="upload-hint">Supported format: .csv (max 50MB)</p>
+                <input type="file" id="fileInput" accept=".csv" hidden>
+            </div>
+            <div class="upload-progress" id="uploadProgress" style="display:none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">Processing...</p>
+            </div>
+            <div class="upload-success" id="uploadSuccess" style="display:none;">
+                <i class="fas fa-check-circle"></i>
+                <h3 id="successMessage">Dataset loaded successfully!</h3>
+                <p id="successDetails"></p>
+            </div>
+        </section>
+
+        <!-- Filters Section -->
+        <section class="filters-section" id="filters-section" style="display:none;">
+            <div class="section-title">
+                <h3><i class="fas fa-filter"></i> Filters</h3>
+            </div>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label for="stateFilter">State / UT</label>
+                    <select id="stateFilter">
+                        <option value="all">All States</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="cityFilter">District / City</label>
+                    <select id="cityFilter">
+                        <option value="all">All Cities</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="crimeFilter">Crime Type</label>
+                    <select id="crimeFilter">
+                        <option value="all">All Crime Types</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="yearFilter">Year</label>
+                    <select id="yearFilter">
+                        <option value="all">All Years</option>
+                    </select>
+                </div>
+                <div class="filter-group filter-btn-group">
+                    <button class="btn-analyze" id="analyzeBtn">
+                        <i class="fas fa-search"></i> Analyze
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section" id="stats-section" style="display:none;">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-icon" style="background: linear-gradient(135deg, #4f46e5, #7c3aed);">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <p class="stat-card-label">Total Cases</p>
+                        <h3 class="stat-card-value" id="statTotalCases">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon" style="background: linear-gradient(135deg, #ef4444, #f97316);">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <p class="stat-card-label">High Risk Zones</p>
+                        <h3 class="stat-card-value" id="statHighRisk">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <p class="stat-card-label">Areas Analyzed</p>
+                        <h3 class="stat-card-value" id="statAreas">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <p class="stat-card-label">Year Range</p>
+                        <h3 class="stat-card-value" id="statYears">-</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="dashboard-section" id="analysis-section" style="display:none;">
+            <div class="section-title">
+                <h3><i class="fas fa-chart-bar"></i> Crime Analysis Charts</h3>
+            </div>
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h4>Crime Type Distribution</h4>
+                        <span class="chart-badge">Doughnut</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="crimeTypeChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h4>Yearly Crime Trend</h4>
+                        <span class="chart-badge">Line</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="yearlyTrendChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h4>Reported vs Solved Cases</h4>
+                        <span class="chart-badge">Bar</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="reportedSolvedChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h4>Area-wise Comparison</h4>
+                        <span class="chart-badge">Horizontal Bar</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="cityComparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- High Risk Alerts -->
+        <section class="dashboard-section" id="alerts-section" style="display:none;">
+            <div class="section-title">
+                <h3><i class="fas fa-bell"></i> High Risk Alert System</h3>
+            </div>
+            <div class="alerts-container" id="alertsContainer">
+                <!-- Alerts will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Heatmap Section -->
+        <section class="dashboard-section" id="heatmap-section" style="display:none;">
+            <div class="section-title">
+                <h3><i class="fas fa-map-marked-alt"></i> Crime Heat Map</h3>
+                <p>Geographic visualization of crime intensity</p>
+            </div>
+            <div class="map-container" id="mapContainer">
+                <div class="map-title" id="mapCustomTitle">
+                    🔥 Crime Hotspots <span id="mapTitleLocation">in India</span>
+                </div>
+                <div id="crimeMap" style="height: 500px; width: 100%; border-radius: 12px; z-index: 1;"></div>
+                <div class="map-legend">
+                    <div class="legend-color-box"></div>
+                    <span>Low</span>
+                    <div class="legend-gradient"></div>
+                    <span>High</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hotspot Prediction -->
+        <section class="dashboard-section" id="hotspot-section" style="display:none;">
+            <div class="section-title">
+                <h3><i class="fas fa-fire"></i> Crime Hotspot Prediction</h3>
+                <p>Predicted future crime hotspots based on growth trends</p>
+            </div>
+            <div class="hotspot-table-container">
+                <table class="hotspot-table" id="hotspotTable">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Area</th>
+                            <th>Current Cases</th>
+                            <th>Predicted Cases</th>
+                            <th>Growth Rate</th>
+                            <th>Risk Score</th>
+                            <th>Trend</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hotspotBody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Forecast Section -->
+        <section class="dashboard-section" id="forecast-section" style="display:none;">
+            <div class="section-title">
+                <h3><i class="fas fa-chart-line"></i> Crime Trend Forecasting</h3>
+                <p>ML-powered prediction of future crime trends with confidence intervals</p>
+            </div>
+            <div class="chart-card forecast-chart">
+                <div class="chart-container" style="height: 350px;">
+                    <canvas id="forecastChart"></canvas>
+                </div>
+            </div>
+            <div class="forecast-metrics" id="forecastMetrics">
+            </div>
+        </section>
+
+        <!-- AI Assistant Section -->
+        <section class="dashboard-section" id="ai-section" style="display:none;">
+            <div class="section-title">
+                <h3><i class="fas fa-robot"></i> AI Assistant</h3>
+                <p>Ask questions about your data, charts, and predictions</p>
+            </div>
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message bot">
+                        <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                        <div class="message-content">
+                            <p>👋 Hello! I'm the CrimePredict AI Assistant. I can help you understand your crime data,
+                                explain charts, and provide insights. Try asking me something like:</p>
+                            <div class="suggestion-chips">
+                                <button class="chip" data-q="What are the crime trends?">📈 Crime trends</button>
+                                <button class="chip" data-q="Which areas are high risk?">🔴 High risk areas</button>
+                                <button class="chip" data-q="Explain the charts">📊 Explain charts</button>
+                                <button class="chip" data-q="How to reduce crime?">💡 Recommendations</button>
+                                <button class="chip" data-q="Give me a data summary">📋 Data summary</button>
+                                <button class="chip" data-q="What are the predictions?">🔮 Predictions</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput"
+                        placeholder="Ask me anything about the crime data..." />
+                    <button class="chat-send" id="chatSend">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Report Section -->
+        <section class="dashboard-section" id="report-section" style="display:none;">
+            <div class="section-title">
+                <h3><i class="fas fa-file-pdf"></i> Generate Report</h3>
+                <p>Download a comprehensive PDF report with all analysis results</p>
+            </div>
+            <div class="report-card">
+                <div class="report-icon"><i class="fas fa-file-pdf"></i></div>
+                <h3>Crime Analysis Report</h3>
+                <p>Includes: Executive Summary, Crime Distribution, Yearly Trends, Risk Assessment, Predictions,
+                    Hotspots, and Recommendations</p>
+                <button class="btn-report" id="generateReport">
+                    <i class="fas fa-download"></i> Generate & Download Report
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display:none;">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p id="loadingText">Processing...</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+</body>
+
+</html>
